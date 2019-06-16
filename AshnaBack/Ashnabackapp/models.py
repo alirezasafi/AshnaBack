@@ -22,7 +22,6 @@ class Charity(models.Model):
     
     def __str__(self):
         return self.Name
-    
 
 
 class Person(models.Model):
@@ -42,7 +41,7 @@ class Post(models.Model):
     Subject = models.CharField(max_length=100)
     Content = models.TextField(blank=True, null=True)
     Owner = models.ForeignKey(Charity, related_name='Post', on_delete=models.CASCADE)
-    CreationDate = models.DateField(auto_now_add=True)
+    CreationData = models.DateField(auto_now_add=True)
     
     def __str__(self):
         return self.Subject
