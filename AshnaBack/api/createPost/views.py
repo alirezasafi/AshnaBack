@@ -22,29 +22,26 @@ class CharityPostRepots(APIView):
 
     def post(self,request,*args,**kwargs):
         data=request.data
-        response={'Error':'','Subject':'','Content':''}
+        response={'Error':''}
         subject=data['Subject']
         content=data['Content']
-        charity_id=data['Owner']
-        owner_obj=Charity.objects.filter(id=charity_id)
+        image=data['Image']
+        name=data['name']
+        
+        owner_obj=Charity.objects.filter(Name=name)
 
         if not subject:
             response['Error']='subject does not entered'
-        elif not content:
-            response['Error']='content does not entered'
-        elif not owner_obj.exists():
-            response['Error']='owner does not selected'
+        
         else:
-            # import pprint
-            # pprint.pprint(request.data)
             new_post=Post(
                 Subject=subject,
                 Content=content,
-                Owner=owner_obj[0]
+                Owner=owner_obj[0],
+                Image=image
             )
             new_post.save()
-            response['Subject']=subject
-            response['Content']=content
+            
             
 
             return Response(response,HTTP_201_CREATED)
