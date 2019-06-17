@@ -1,6 +1,8 @@
 from rest_framework.generics import (
-    RetrieveAPIView
+    RetrieveAPIView,
+    ListAPIView
 )
+from django.urls import resolve
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from Ashnabackapp.models import (
@@ -12,6 +14,7 @@ from Ashnabackapp.models import (
 from .serializers import (
     CharityProfileSerializer,
     PersonProfileSerializer,
+    PostsSerilizer,
     PostSerializer,
     FollowersSerializers
 )
@@ -33,3 +36,15 @@ class ProfileView(RetrieveAPIView):
             return CharityProfileSerializer
         return PersonProfileSerializer
         
+        
+class PostsView(ListAPIView):
+    def get_queryset(self):
+        Charity_obj = Charity.objects.filter(Charity_User_id=self.request.user.id)
+        if Charity_obj.exists():
+            return Charity.objects.filter(Name=Charity_obj[0].Name)
+     
+
+    def get_serializer_class(self):
+        Charity_obj = Charity.objects.filter(Charity_User_id=self.request.user.id)
+        if Charity_obj.exists():
+            return PostsSerilizer
