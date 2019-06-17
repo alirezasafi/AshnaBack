@@ -17,7 +17,7 @@ class PostSerializer(ModelSerializer):
             'CreationData'
         )
     def get_Image(self,instance):
-        if instance.Image == None:
+        if not instance.Image:
             return None
         Image = "http://127.0.0.1:8000" + instance.Image.url
         return Image
@@ -38,7 +38,6 @@ class FollowingsSerializers(ModelSerializer):
         )
 
 class CharityProfileSerializer(ModelSerializer):
-    Posts = SerializerMethodField()
     Followers = SerializerMethodField()
     Image = SerializerMethodField()
     class Meta:
@@ -55,18 +54,13 @@ class CharityProfileSerializer(ModelSerializer):
             'Kind',
             'FieldOFactivity',
             'Bio',
-            'Posts',
             'Followers',
         )
     def get_Image(self,instance):
-        if instance.Image == None:
+        if not instance.Image:
             return None
         Image = "http://127.0.0.1:8000" + instance.Image.url
         return Image
-    def get_Posts(self,instance):
-        Posts = Post.objects.filter(Owner_id=instance.id)
-        Posts = PostSerializer(Posts,many=True).data
-        return Posts
     def get_Followers(self,instance):
         relations = Relation.objects.filter(Followed_id = instance.id)
         Followers = []
@@ -91,8 +85,7 @@ class PersonProfileSerializer(ModelSerializer):
             'Followings',
         )
     def get_Image(self,instance):
-        
-        if instance.Image == None:
+        if not instance.Image:
             return None
         Image = "http://127.0.0.1:8000" + instance.Image.url
         return Image
@@ -104,3 +97,26 @@ class PersonProfileSerializer(ModelSerializer):
             Followings.append(rel.Followed)
         Followings = FollowingsSerializers(Followings, many=True).data
         return Followings
+    
+    
+class PostsSerilizer(ModelSerializer):
+    Image = SerializerMethodField()
+    Posts = SerializerMethodField()
+    class Meta:
+        model = Charity
+        fields = (
+            'Name',
+            'Image',
+            'Posts',
+            
+        )
+    def get_Image(self, instance):
+        if not instance.Image:
+            return None
+        Image = "http://127.0.0.1:8000" + instance.Image.url
+        return Image
+
+    def get_Posts(self, instance):
+        Posts = Post.objects.filter(Owner_id=instance.id)
+        Posts = PostSerializer(Posts, many=True).data
+        return Posts
