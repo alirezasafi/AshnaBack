@@ -6,6 +6,21 @@ from django.contrib.auth import get_user_model
 
 User_model = get_user_model()
 
+kind = (
+    ('government organization' , 'سازمان دولتی'),
+    ('charity organization' , 'سازمان خیریه'),
+    ('non governmental Organization' , 'سازمان مردم نهاد'),
+    ('Private organization' , 'سازمان خصوصی'),
+    ('Public organization' , 'سازمان عمومی'),
+    ('government organization' , 'سازمان دولتی'),
+    
+)
+fieldofactivity = (
+    ('Healthcare','بهداشت و درمان'),
+    ('Education','اموزش'),
+    ('Ability and rehabilitation','توانایی و بازپروری'),
+    ('Maintenance and care','نگهداری و سرپرستی'),
+)
 
 class Charity(models.Model):
     Charity_User = models.OneToOneField(User_model, on_delete=models.CASCADE, related_name='Charity', default=None)
@@ -15,8 +30,8 @@ class Charity(models.Model):
     Email = models.EmailField(unique=True, max_length=100)
     Address = models.TextField(blank=True)
     CreationData = models.DateField(auto_now_add=True)
-    Kind = models.CharField(max_length=100)
-    FieldOFactivity = models.CharField(max_length=100)
+    Kind = models.CharField(choices=kind,max_length=100)
+    FieldOFactivity = models.CharField(choices=fieldofactivity,max_length=100)
     Bio = models.TextField(blank=True)
     Password = models.CharField(max_length=100)
     
