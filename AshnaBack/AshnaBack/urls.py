@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('createpost/',include('api.createPost.urls')),
     path('signup/',include('api.signup.urls')),
     path('login/',include('api.login.urls')),
 <<<<<<< HEAD
