@@ -14,43 +14,27 @@ User = get_user_model()
 
 class CharitySighnupSerializer(ModelSerializer):
     Name = CharField()
-    ManagingDirector = CharField()
+    ManagerName = CharField()
     Email = EmailField()
     PhoneNumber = CharField()
     Password = CharField()
     ConfirmPassword = CharField(label='Confirm Password')
-    
+    Address = CharField()
+    Kind = CharField()
     class Meta():
-        model = User
+        model = Charity
         fields = (
             'Name',
-            'ManagingDirector',
+            'ManagerName',
             'Email',
+            'Address',
             'PhoneNumber',
             'Password',
             'ConfirmPassword',
+            'Kind',
+            # 'Image'
         )
-    
-    # def create(self, data):
-    #     confirmpass = data['ConfirmPassword']
-    #     email = data['Email']
-    #     name = data['Name']
-    #     password = data['Password']
-    #     if password != confirmpass:
-    #         raise ValidationError('Passsword isnt match')
-    #     charity = Charity.objects.filter(Email=email)
-    #     if charity.exists():
-    #         raise ValidationError('User has alredy signuped')
-    #     user_obj = User.objects.create_user(username=name, password=password, email=email)
-    #     user_obj.save()
-    #     Charity_obj = Charity(
-    #         Charity_User=user_obj,
-    #         Name=name,
-    #         Email=email,
-    #     )
-    #     Charity_obj.Password = password
-    #     Charity_obj.save()
-    #     return data
+
 
 
 class PersonSignupSerializer(ModelSerializer):
@@ -70,23 +54,3 @@ class PersonSignupSerializer(ModelSerializer):
             'ConfirmPassword',
         )
     
-    # def create(self, data):
-    #     email = data['Email']
-    #     name = data['Name']
-    #     password = data['Password']
-    #     confirmpass = data['ConfirmPassword']
-    #     if password != confirmpass:
-    #         raise ValidationError('Password isnt match')
-    #     benefactor = Person.objects.filter(Email=email)
-    #     if benefactor.exists():
-    #         raise ValidationError('User has alredy signuped')
-    #     user_obj = User.objects.create_user(username=name, password=password, email=email)
-    #     user_obj.save()
-    #     benfactor_obj = Person(
-    #         Benefactor_User=user_obj,
-    #         Name=name,
-    #         Email=email,
-    #         Password=password
-    #     )
-    #     benfactor_obj.save()
-    #     return data
