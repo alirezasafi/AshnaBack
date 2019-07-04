@@ -9,7 +9,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('signup/',include('api.signup.urls')),
     path('login/',include('api.login.urls')),
+<<<<<<< HEAD
     path('my_profile/',include('api.profile.urls')),
     path('createpost/',include('api.CreatePost.urls')),
+=======
+>>>>>>> 193fd795067ac808857940aab346d77625a72dce
     
 ] + static(settings.MEDIA_URL , document_root=settings.MEDIA_ROOT)
