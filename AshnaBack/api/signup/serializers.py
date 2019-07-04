@@ -21,6 +21,10 @@ class CharitySighnupSerializer(ModelSerializer):
     ConfirmPassword = CharField(label='Confirm Password')
     Address = CharField()
     Kind = CharField()
+<<<<<<< HEAD
+    
+=======
+>>>>>>> 193fd795067ac808857940aab346d77625a72dce
     class Meta():
         model = Charity
         fields = (
@@ -34,7 +38,10 @@ class CharitySighnupSerializer(ModelSerializer):
             'Kind',
             # 'Image'
         )
+<<<<<<< HEAD
+=======
 
+>>>>>>> 193fd795067ac808857940aab346d77625a72dce
 
 
 class PersonSignupSerializer(ModelSerializer):
@@ -53,4 +60,7 @@ class PersonSignupSerializer(ModelSerializer):
             'Password',
             'ConfirmPassword',
         )
+<<<<<<< HEAD
+=======
     
+>>>>>>> 193fd795067ac808857940aab346d77625a72dce

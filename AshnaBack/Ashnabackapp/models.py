@@ -30,7 +30,7 @@ class Charity(models.Model):
     PhoneNumber = models.CharField(max_length=100)
     Email = models.EmailField(unique=True, max_length=100)
     Address = models.TextField(blank=True)
-    CreationData = models.DateField(auto_now_add=True)
+    CreationDate = models.DateField(auto_now_add=True)
     Kind = models.CharField(choices=kind,max_length=100)
     FieldOFactivity = models.CharField(choices=fieldofactivity,max_length=100)
     Bio = models.TextField(blank=True)
@@ -58,8 +58,13 @@ class Post(models.Model):
     Subject = models.CharField(max_length=100)
     Content = models.TextField(blank=True, null=True)
     Owner = models.ForeignKey(Charity, related_name='Post', on_delete=models.CASCADE)
+<<<<<<< HEAD
+    CreationDate = models.DateField(auto_now_add=True)
+    
+=======
     CreationData = models.DateField(auto_now_add=True)
     Image = models.ImageField(upload_to='images/',blank=True,null=True)
+>>>>>>> 193fd795067ac808857940aab346d77625a72dce
     def __str__(self):
         return self.Subject
 
