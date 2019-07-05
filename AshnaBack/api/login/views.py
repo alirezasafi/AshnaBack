@@ -13,11 +13,7 @@ from Ashnabackapp.models import Charity
 from Ashnabackapp.models import Person
 
 user_model = get_user_model()
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 193fd795067ac808857940aab346d77625a72dce
 class Login(APIView):
     serializer_class = loginSerializer
     permission_classes = [AllowAny]
@@ -26,11 +22,7 @@ class Login(APIView):
         data = request.data
         email = data['Email']
         password = data['Password']
-<<<<<<< HEAD
         response = {'Error': "", 'Token': "", 'Name': ""}
-=======
-        response = {'Error': "",'Token':"",'Name':""}
->>>>>>> 193fd795067ac808857940aab346d77625a72dce
         Charity_obj = Charity.objects.filter(Email=email)
         if Charity_obj.exists() == True:
             Charity_obj = Charity_obj[0]
@@ -44,15 +36,8 @@ class Login(APIView):
                 # login(request, user)
                 response['Name'] = name
                 response['Token'] = token.key
-<<<<<<< HEAD
             
             return Response(response)
-        
-=======
-                
-            return Response(response)
-            
->>>>>>> 193fd795067ac808857940aab346d77625a72dce
         
         else:
             Person_obj = Person.objects.filter(Email=email)
