@@ -14,7 +14,7 @@ class PostSerializer(ModelSerializer):
             'Image',
             'Subject',
             'Content',
-            'CreationData'
+            'CreationDate'
         )
     def get_Image(self,instance):
         if not instance.Image:
@@ -50,7 +50,7 @@ class CharityProfileSerializer(ModelSerializer):
             'PhoneNumber',
             'Email',
             'Address',
-            'CreationData',
+            'CreationDate',
             'Kind',
             'FieldOFactivity',
             'Bio',
