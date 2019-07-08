@@ -7,7 +7,7 @@ from Ashnabackapp.models import (
     Person,
     Relation,
 )
-
+from django.db.models import CharField
 
 class PersonSerializers(ModelSerializer):
     Image = SerializerMethodField()
@@ -70,3 +70,12 @@ class FollowingsSerializers(ModelSerializer):
             Followings.append((rel.Follower))
         Followings = CharitySerializers(Followings,many=True).data
         return Followings
+
+class PersonFollowCharotySerializer(ModelSerializer):
+    Follower=CharField()
+    Followed=CharField()
+    class Meta:
+        model=Relation
+        fields=('id','Follower','Followed')
+        
+        
