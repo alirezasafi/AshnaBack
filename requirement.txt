@@ -1,0 +1,7 @@
+django
+djangorestframework
+Pillow
+PyJWT
+django-cors-headers
+djangorestframework-jwt
+psycopg2
