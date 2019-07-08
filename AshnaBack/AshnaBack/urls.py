@@ -21,4 +21,6 @@ urlpatterns = [
     path('createpost/',include('api.createPost.urls')),
     path('signup/',include('api.signup.urls')),
     path('login/',include('api.login.urls')),
+    path('follow/',include('api.follow.urls')),
+    
 ]
