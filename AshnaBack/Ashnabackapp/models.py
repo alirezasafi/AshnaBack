@@ -20,12 +20,14 @@ fieldofactivity = (
     ('Education','اموزش'),
     ('Ability and rehabilitation','توانایی و بازپروری'),
     ('Maintenance and care','نگهداری و سرپرستی'),
+    ('Environment' , 'محیط زیست و منابع طبیعی'),
+    ('Structure','تجهیز و عمران')
 )
 
 class Charity(models.Model):
     Charity_User = models.OneToOneField(User_model, on_delete=models.CASCADE, related_name='Charity', default=None)
     Name = models.CharField(max_length=100)
-    Image = models.ImageField(upload_to='images/',blank=True,null=True)
+    Image = models.ImageField(upload_to='images/',default='/images/default-avatar.png', blank=True,null=True)
     ManagingDirector = models.CharField(max_length=100)
     PhoneNumber = models.CharField(max_length=100)
     Email = models.EmailField(unique=True, max_length=100)
@@ -43,7 +45,7 @@ class Charity(models.Model):
 class Person(models.Model):
     Person_User = models.OneToOneField(User_model, on_delete=models.CASCADE, related_name='Benefactor',
                                            default=None)
-    Image = models.ImageField(upload_to='images/',blank=True,null=True)
+    Image = models.ImageField(upload_to='images/',default='/images/default-avatar.png',blank=True,null=True)
     Name = models.CharField(max_length=100)
     PhoneNumber = models.CharField(max_length=100)
     Email = models.EmailField(unique=True)

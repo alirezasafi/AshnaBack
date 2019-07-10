@@ -11,5 +11,6 @@ urlpatterns = [
     path('signup/', include('api.signup.urls')),
     path('login/', include('api.login.urls')),
     path('my_profile/', include('api.profile.urls')),
-
+    path('charities/',include('api.charities.urls')),
+    path('follow/',include('api.follow.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

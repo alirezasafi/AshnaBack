@@ -7,15 +7,22 @@ from Ashnabackapp.models import Charity,Post,Person,Relation
 
 
 class PostSerializer(ModelSerializer):
+    Owner = SerializerMethodField()
     Image = SerializerMethodField()
     class Meta:
         model = Post
         fields = (
+            'id',
             'Image',
             'Subject',
             'Content',
-            'CreationDate'
+            'CreationDate',
+            'Owner',
         )
+    def get_Owner(self, instance):
+        Owner = Charity.objects.filter(id=instance.Owner_id)[0]
+        return Owner.Name
+    
     def get_Image(self,instance):
         if not instance.Image:
             return None
@@ -38,7 +45,6 @@ class FollowingsSerializers(ModelSerializer):
         )
 
 class CharityProfileSerializer(ModelSerializer):
-    Followers = SerializerMethodField()
     Image = SerializerMethodField()
     class Meta:
         model = Charity
@@ -47,31 +53,21 @@ class CharityProfileSerializer(ModelSerializer):
             'ManagingDirector',
             'Image',
             'PhoneNumber',
-            'PhoneNumber',
             'Email',
             'Address',
             'CreationDate',
             'Kind',
             'FieldOFactivity',
             'Bio',
-            'Followers',
+            # 'Followers',
         )
     def get_Image(self,instance):
         if not instance.Image:
             return None
         Image = "http://127.0.0.1:8000" + instance.Image.url
         return Image
-    def get_Followers(self,instance):
-        relations = Relation.objects.filter(Followed_id = instance.id)
-        Followers = []
-        for rel in relations:
-            Followers.append(rel.Follower)
-        Followers = FollowersSerializers(Followers,many=True).data
-        return Followers
-        
 
 class PersonProfileSerializer(ModelSerializer):
-    Followings = SerializerMethodField()
     Image = SerializerMethodField()
     class Meta:
         model = Person
@@ -81,8 +77,6 @@ class PersonProfileSerializer(ModelSerializer):
             'PhoneNumber',
             'Email',
             'TotalSupport',
-            'Password',
-            'Followings',
         )
     def get_Image(self,instance):
         if not instance.Image:
@@ -90,13 +84,6 @@ class PersonProfileSerializer(ModelSerializer):
         Image = "http://127.0.0.1:8000" + instance.Image.url
         return Image
     
-    def get_Followings(self,instance):
-        relations = Relation.objects.filter(Follower_id=instance.id)
-        Followings = []
-        for rel in relations:
-            Followings.append(rel.Followed)
-        Followings = FollowingsSerializers(Followings, many=True).data
-        return Followings
     
     
 class PostsSerilizer(ModelSerializer):
@@ -120,3 +107,30 @@ class PostsSerilizer(ModelSerializer):
         Posts = Post.objects.filter(Owner_id=instance.id)
         Posts = PostSerializer(Posts, many=True).data
         return Posts
+    
+    
+class TimeLineSerializers(ModelSerializer):
+    Image = SerializerMethodField()
+    Posts = SerializerMethodField()
+    class Meta:
+        model = Person
+        fields = (
+            'id',
+            'Name',
+            'Image',
+            'Posts',
+        )
+        
+    def get_Image(self,instance):
+        if not instance.Image:
+            return None
+        Image = "http://127.0.0.1:8000" + instance.Image.url
+        return Image
+
+    def get_Posts(self,instance):
+        relation = Relation.objects.filter(Follower_id=instance.id).values_list('Followed_id', flat=True)
+        posts = reversed(Post.objects.filter(Owner_id__in=relation).order_by('CreationDate'))
+        print(posts)
+        posts = PostSerializer(posts,many=True).data
+        return posts
+        

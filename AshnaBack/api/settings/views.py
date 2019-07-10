@@ -33,18 +33,35 @@ class ProfileUpdataeApiview(RetrieveUpdateAPIView):
     def put(self, request, *args, **kwargs):
         data = request.data
         user = User_model.objects.filter(id=request.user.id)[0]
-        charity = Charity.objects.filter(Name=user.username)[0]
-        user.email = data['Email']
-        user.username = data['Name']
-        Charity.Name = data['Name']
-        if data['Image'] != "null":
-            charity.Image = data['Image']
-        charity.ManagingDirector = data['ManagingDirector']
-        charity.PhoneNumber = data['PhoneNumber']
-        charity.Email = data['Email']
-        charity.Address = data['Address']
-        charity.Bio = data['Bio']
-        user.save()
-        charity.save()
-        response = {"Error":""}
-        return Response(response)
+        Charity_obj = Charity.objects.filter(Charity_User_id=request.user.id)
+        if Charity_obj.exists():
+            charity = Charity_obj[0]
+            user.email = data['Email']
+            user.username = data['Name']
+            Charity.Name = data['Name']
+            if data['Image'] != "null":
+                charity.Image = data['Image']
+            charity.ManagingDirector = data['ManagingDirector']
+            charity.PhoneNumber = data['PhoneNumber']
+            charity.Email = data['Email']
+            charity.Address = data['Address']
+            charity.Bio = data['Bio']
+            user.save()
+            charity.save()
+            response = {"Error": ""}
+            return Response(response)
+        else:
+            
+            Person_obj = Person.objects.filter(Person_User_id=request.user.id)[0]
+            user.email = data['Email']
+            user.username = data['Name']
+            Person_obj.Name = data['Name']
+            if data['Image'] != "null":
+                Person_obj.Image = data['Image']
+            Person_obj.PhoneNumber = data['PhoneNumber']
+            Person_obj.Email = data['Email']
+            user.save()
+            Person_obj.save()
+            response = {"Error":""}
+            return Response(response)
+        
