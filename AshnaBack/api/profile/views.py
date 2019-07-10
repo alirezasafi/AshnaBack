@@ -16,7 +16,8 @@ from .serializers import (
     PersonProfileSerializer,
     PostsSerilizer,
     PostSerializer,
-    FollowersSerializers
+    FollowersSerializers,
+    TimeLineSerializers,
 )
 
     
@@ -48,3 +49,12 @@ class PostsView(ListAPIView):
         Charity_obj = Charity.objects.filter(Charity_User_id=self.request.user.id)
         if Charity_obj.exists():
             return PostsSerilizer
+
+
+class TimeLineView(ListAPIView):
+    def get_serializer_class(self):
+        return TimeLineSerializers
+    def get_queryset(self):
+        Person_obj = Person.objects.filter(Person_User_id=self.request.user.id)
+        if Person_obj.exists():
+            return Person.objects.filter(Name=Person_obj[0].Name)
